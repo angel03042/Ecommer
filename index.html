@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="/src/output.css">
+    <style>[x-cloak] { display: none !important; }</style>
+    <style> html {scroll-behavior: smooth;} </style>
+    <title>RopsMart</title>
+</head>
+<body x-data="{inicio: 'home'}" id="Home" class="m-0 p-0">
+    <!-- Menu -->
+    <nav class="md:sticky md:top-0 md:z-50 bg-white flex justify-between items-center rounded-2xl mx-6 md:m-10 lg:mx-15 md:px-5 md:py-5 my-2 md:my-0">
+        <h3 class="font-bold text-2xl">RopsMart</h3>
+        <div class="md:flex items-center gap-16 hidden">
+            <a @click="inicio = 'home'" href="#Home" class="cursor-pointer">Home</a>
+            <a @click="inicio = 'home'" href="#Shop" class="cursor-pointer">Shop</a>
+            <a @click="inicio = 'home'" href="#Elements" class="cursor-pointer">Elements</a>
+        </div>
+        <div class="md:flex gap-4 hidden">
+            <a href="public/login.html"><img class="w-8 cursor-pointer" src="/public/img/MaterialSymbolsLightSupervisedUserCircle.svg" alt=""></a>
+            <img @click="inicio = 'favorito'" class="w-8 cursor-pointer" src="/public/img/MaterialSymbolsLightFavoriteOutline.svg" alt="">
+            <div class="relative">
+                <img @click="inicio = 'compra'" class="w-8 cursor-pointer" src="/public/img/MaterialSymbolsLightAddShoppingCartRounded.svg" alt="">
+                <div class="absolute inset-0 left-3/4 -top-1/2"><span class="bg-amber-700 rounded-2xl px-1.5 border-1 border-black text-white font-bold">0</span></div>
+            </div>
+        </div>
+        <!-- menu movil -->
+        <details id="menu" class="md:hidden">
+            <summary class="list-none"><img class="cursor-pointer w-10" src="public/img/MaterialSymbolsLightMenuRounded.svg" alt=""></summary>
+            <div class="flex flex-col gap-4 fixed z-50 right-10 bg-gray-900 text-white w-1/2 p-4 rounded-2xl">
+              <a @click="inicio = 'home'" href="#Home">Home</a>
+              <a @click="inicio = 'home'" href="#Shop">Shop</a>
+              <a @click="inicio = 'home'" href="#Elements">Elements</a>
+              <hr>
+              <div class="flex justify-between items-center">
+                <a href="public/login.html"><img class="w-10 filter invert cursor-pointer" src="public/img/MaterialSymbolsLightSupervisedUserCircle.svg" alt=""></a>
+                <img @click="inicio = 'favorito'" class="w-10 filter invert cursor-pointer" src="public/img/MaterialSymbolsLightFavoriteOutline.svg" alt="">
+                <img @click="inicio = 'compra'" class="w-10 filter invert cursor-pointer" src="public/img/MaterialSymbolsLightAddShoppingCartRounded.svg" alt="">
+              </div>
+            </div>
+        </details>
+    </nav>
+    <section x-show="inicio === 'home'">
+        <header x-data="{anuncio: 'one'}" x-data="{inicio: 'home'}" class="w-full h-screen">
+            <section class="relative">
+            <!-- Section Anuncio 1-->
+            <main x-show="anuncio === 'one'" class="grid lg:grid-cols-2 h-[70vh] md:h-[80vh] lg:h-[70vh] 2xl:h-[80vh] bg-fuchsia-300 overflow-hidden">
+                <div class="flex flex-col justify-center items-center gap-8">
+                    <span class="flex flex-col gap-2 text-center">
+                        <h2 class="font-[Great_Vibes] italic text-4xl md:text-5xl">Season Sale</h2>
+                        <h1 class="text-6xl md:text-7xl font-bold">MONTH FASHION</h1>
+                    </span>
+                    <span class="flex flex-col gap-4 text-center">
+                        <p class="text-xl md:text-2xl">Min. 30-70% off</p>
+                        <div class="flex gap-8">
+                            <button class="bg-blue-400 px-6 py-2 cursor-pointer">SHOP NOW</button>
+                            <button class="bg-white px-6 py-2 border-2 cursor-pointer">READ MORE</button>
+                        </div>
+                    </span>
+                </div>
+                <div class="lg:flex items-end justify-center overflow-hidden hidden">
+                    <img class="max-h-full w-auto h-full object-contain" src="/public/img/modelo.png" alt="">
+                </div>
+            </main>
+            <!-- Section Anuncio 2 -->
+            <main x-show="anuncio === 'two'" class="relative h-[70vh] md:h-[80vh] lg:h-[70vh] 2xl:h-[80vh] overflow-hidden bg-amber-950">
+                <div class="xl:flex items-end justify-center overflow-hidden hidden">
+                    <img class="max-h-full w-full h-full object-contain" src="/public/img/modelo5.png" alt="">
+                </div>
+                <div class="absolute inset-0 flex flex-col justify-center items-end gap-8 px-10">
+                    <span class="flex flex-col text-center gap-3 lg:gap-6 items-center">
+                        <h2 class="font-[Great_Vibes] italic text-4xl md:text-5xl text-white">Season Sale</h2>
+                        <h1 class="text-6xl md:text-7xl font-bold text-white">WOMEN'S FASHION</h1>
+                        <p class="text-xl md:text-2xl text-white">Min. 50-780% off</p>
+                        <button class="bg-blue-400 px-6 py-2 cursor-pointer w-max">SHOP NOW</button>
+                    </span>
+                </div>
+            </main>
+            <!-- Navegacion Anuncio -->
+            <div class="absolute inset-0 flex justify-center items-end gap-4 w-full h-full py-4">
+                <div @click="anuncio = 'one'" class="w-4 h-4 bg-white border-1 rounded-2xl cursor-pointer"></div>
+                <div @click="anuncio = 'two'" class="w-4 h-4 bg-white border-1 rounded-2xl cursor-pointer"></div>
+            </div>
+            </section>
+            <!-- Promociones -->
+            <div id="Shop" class="flex justify-between items-center gap-2 md:gap-0 flex-wrap mx-6 md:mx-10 lg:mx-20 my-6">
+                <div class="flex items-center gap-2 lg:gap-4">
+                    <img class="w-10 lg:w-14" src="/public/img/MaterialSymbolsLightShoppingBagSpeedOutline.svg" alt="">
+                    <div class="">
+                        <p class="font-bold text-sm lg:text-lg">Free Shipping</p>
+                        <p class="text-xs lg:text-sm">On All Dificult you</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2 lg:gap-4">
+                    <img class="w-10 lg:w-14" src="/public/img/MaterialSymbolsLightHandshakeOutline.svg" alt="">
+                    <div>
+                        <p class="font-bold text-sm lg:text-lg">Secure Payment</p>
+                        <p class="text-xs lg:text-sm">We secure payment</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2 lg:gap-4">
+                    <img class="w-10 lg:w-14" src="/public/img/MaterialSymbolsLightUniversalCurrencyAltOutlineRounded.svg" alt="">
+                    <div>
+                        <p class="font-bold text-sm lg:text-lg">100% Money</p>
+                        <p class="text-xs lg:text-sm">Very Days Return</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2 lg:gap-4">
+                    <img class="w-10 lg:w-14" src="/public/img/MaterialSymbolsLightElectricalServicesRounded.svg" alt="">
+                    <div>
+                        <p class="font-bold text-sm lg:text-lg">Online Support</p>
+                        <p class="text-xs lg:text-sm">24/? Dedcated support</p>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <section class="mx-6 md:mx-10 lg:mx-20">
+            <!-- Elementos -->
+            <article class="grid grid-cols-2 md:grid-cols-4 md:grid-rows-2 mb-10 md:mb-16 gap-2 md:gap-4 lg:h-[40vw]">
+                <div class="relative col-span-2 md:row-span-2">
+                    <img class="rounded-2xl w-full h-full" src="public/img/modelo2.png" alt="">
+                    <div class="absolute flex flex-col items-end gap-4 md:gap-10 inset-0 p-6 lg:p-10">
+                        <div class="flex flex-col items-end gap-2">
+                            <p class="text-white text-sm lg:text-xl">New Arrivals</p>
+                            <p class="text-2xl md:text-xl lg:text-4xl font-bold text-white">Gentleman Style</p>
+                            <p class="text-white text-base lg:text-xl">Up to 60% off</p>
+                        </div>
+                        <button class="text-white text-sm md:text-xs lg:text-base border-2 border-white px-6 py-2 rounded-4xl cursor-pointer">Shop Now</button>
+                    </div>
+                </div>
+                <div class="relative">
+                    <img class="rounded-2xl w-full h-full" src="public/img/bolso.png" alt="">
+                    <div class="absolute flex flex-col items-start gap-1.5 md:gap-2 inset-0 p-2 lg:p-4">
+                        <p class="bg-blue-500 w-max px-2 lg:px-4 text-white text-xs lg:text-base">30% OFF</p>
+                        <p class="text-white text-xl lg:text-2xl font-bold">Handbang</p>
+                        <button class="text-white text-xs lg:text-base flex justify-center gap-0.5 lg:gap-2 cursor-pointer">Shop Now <img class="w-6 lg:w-8" src="public/img/MaterialSymbolsLightArrowOutward.svg" alt=""></button>
+                    </div>
+                </div>
+                <div class="relative">
+                    <img class="rounded-2xl w-full h-full" src="public//img/relog.png" alt="">
+                    <div class="absolute flex flex-col items-start gap-1.5 md:gap-2 inset-0 p-2 lg:p-4">
+                        <p class="bg-blue-500 w-max px-2 lg:px-4 text-white text-xs lg:text-base">40% OFF</p>
+                        <p class="text-white text-xl lg:text-2xl font-bold">Watch</p>
+                        <button class="text-white text-xs lg:text-base flex justify-center gap-0.5 lg:gap-2 cursor-pointer">Shop Now <img class="w-6 lg:w-8" src="public/img/MaterialSymbolsLightArrowOutward.svg" alt=""></button> 
+                    </div>
+                </div>
+                <div class="relative col-span-2 md:col-start-3 md:col-end-5">
+                    <img class="rounded-2xl w-full h-full" src="public/img/mochila.png" alt="">
+                    <div class="absolute flex flex-col items-start justify-between inset-0 p-4 lg:p-6">
+                        <div class="flex flex-col gap-2">
+                            <p class="text-white text-sm lg:text-xl font-bold">Accessories</p> 
+                            <p class="text-white text-3xl lg:text-4xl font-bold">Backpack</p>
+                            <p class="text-white text-base lg:text-xl">Min 30-90% off</p>
+                        </div>
+                        <button class="text-white text-sm lg:text-base border-b-1 flex justify-center gap-1 md:gap-2 cursor-pointer">Shop Now <img class="w-6 lg:w-8" src="public/img/MaterialSymbolsLightArrowOutward.svg" alt=""></button>
+                    </div>
+                </div>
+            </article>
+            <!-- Productos -->
+            <article id="Elements">
+                <h1 class="text-center font-bold text-2xl mb-6">Featured Products</h1>
+                <div class="flex justify-center gap-10">
+                    <p class="border-b-2 font-bold border-b-blue-700">New Arrival</p>
+                    <p>Best Selling</p>
+                    <p>Top Rated</p>
+                </div>
+                <!--Lista de Productos -->
+                <article>
+    
+                </article>
+                <!-- Navegacion Productos -->
+                <div class="flex justify-center items-end gap-4 w-full h-full py-4">
+                    <div class="w-4 h-4 bg-blue-300 rounded-2xl border-2 cursor-pointer"></div>
+                    <div class="w-4 h-4 bg-white rounded-2xl border-2 cursor-pointer"></div>
+                    <div class="w-4 h-4 bg-white rounded-2xl border-2 cursor-pointer"></div>
+                    <div class="w-4 h-4 bg-white rounded-2xl border-2 cursor-pointer"></div>
+                </div>
+            </article>
+            <!-- Categoria Women's and Men's -->
+            <article class="grid md:grid-cols-2 gap-4 h[60vh] mb-10 md:mb-20">
+                <div class="relative">
+                    <img class="rounded-2xl w-full h-full" src="public/img/modelo3.png" alt="">
+                    <div class="absolute flex flex-col items-end gap-6 lg:gap-10 inset-0 p-4 lg:p-6">
+                        <div class="flex flex-col items-end gap-2 lg:gap-4">
+                            <p class="text-black text-xs lg:text-lg">Fashion Style</p>
+                            <p class="text-2xl lg:text-4xl font-bold text-black">Women's Wear</p>
+                            <p class="text-black text-sm lg:text-xl">Min. <span class="text-blue-800">40-80% Off</span></p>
+                        </div>
+                        <button class="text-black font-bold flex justify-center gap-1 lg:gap-2 cursor-pointer text-sm lg:text-lg">Shop Now <img class="w-6 lg:w-8" src="public/img/MaterialSymbolsLightArrowOutward (1).svg" alt=""></button>
+                    </div>
+                </div>
+                <div class="relative">
+                    <img class="rounded-2xl w-full h-full" src="public/img/modelo4.png" alt="">
+                    <div class="absolute flex flex-col items-start gap-6 lg:gap-10 inset-0 p-4 lg:p-6">
+                        <div class="flex flex-col gap-2 lg:gap-4">
+                            <p class="text-white text-xs lg:text-lg">Fashion Style</p>
+                            <p class="text-2xl lg:text-4xl font-bold text-white">Men's Fashion</p>
+                            <p class="text-white text-sm lg:text-xl">Flat 80% Off</p>
+                        </div>
+                        <button class="text-white font-bold flex justify-center gap-1 lg:gap-2 cursor-pointer text-sm lg:text-lg">Shop Now <img class="w-6 lg:w-8" src="public/img/MaterialSymbolsLightArrowOutward.svg" alt=""></button>
+                    </div>
+                </div>
+            </article>
+        </section>
+    </section>
+    <!-- Compras -->
+    <section class="mx-6 my-6 md:my-0 md:mx-10 lg:mx-20">
+        <!-- Favoritos -->
+        <article x-show="inicio === 'favorito'" class="flex items-start md:items-center justify-center h-[85vh]">
+            <div class="md:bg-gray-300 py-5 md:px-10 rounded-2xl w-full md:w-4/5 lg:w-3/4 md:h-full">
+                <h1 class="text-lg md:text-2xl font-bold">Favoritos</h1>
+                <!-- Productos Agregados al Carrito -->
+                <div class="overflow-y-scroll">
+
+                </div>
+            </div>
+        </article>
+        <!-- Section de los productos -->
+        <article x-show="inicio === 'compra'" class="grid grid-cols-1 lg:grid-cols-4 place-content-center my-10 md:my-0 lg:h-[85vh] gap-4">
+            <!-- Contenedor de los productos agregados -->
+            <div class="lg:col-span-3 bg-gray-300 p-5 rounded-2xl lg:h-[80vh]">
+                <h1 class="text-2xl font-bold">Productos</h1>
+                <!-- Productos Agregados al Carrito -->
+                <div class="lg:overflow-y-scroll">
+
+                </div>
+            </div>
+            <!-- Resumen de la Compra -->
+            <div class="flex flex-col justify-between gap-6 bg-gray-300 h-max rounded-2xl p-4">
+                <p class="font-bold text-lg">Resumen Compra</p>
+                <div class="flex flex-col gap-2">
+                    <div class="flex justify-between items-center">
+                        <p class="font-bold">Productos ( <span>0</span> )</p>
+                        <p class="font-bold">$ 0.00</p>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <p class="font-bold">Envio</p>
+                        <p class="font-bold">$ 0.00</p>
+                    </div>
+                    <p class="text-blue-600 font-bold cursor-pointer">Cupon Descuento</p>
+                </div>
+                <div class="flex justify-between items-center">
+                    <p class="font-bold text-2xl">Total</p>
+                    <p class="font-bold text-2xl">$ 0.00</p>
+                </div>
+                <button @click="inicio = 'domicilio'" class="bg-emerald-600  py-2 rounded-lg border-2 cursor-pointer">Continuar Compra</button>
+            </div>
+        </article>
+        <!--Section de Domicilio -->
+        <article x-show="inicio === 'domicilio'" class="grid grid-cols-1 lg:grid-cols-4 place-content-center lg:h-[85vh] gap-4">
+            <div class="lg:col-span-3">
+                <!-- Contenedor de los productos agregados -->
+                <div class="bg-gray-300 p-5 rounded-2xl mb-4 lg:h-[70vh]">
+                    <h1 class="text-2xl font-bold">Direccion</h1>
+                    <!-- Productos Agregados al Carrito -->
+                    <div class="lg:overflow-y-scroll">
+
+                    </div>
+                </div>
+                <button @click="inicio = 'agregar_direccion'" class="bg-gray-300 w-full rounded-lg border-2 py-4 text-lg font-bold cursor-pointer">Agregar Direccion</button>
+            </div>
+            <!-- Resumen de la Compra -->
+            <div class="flex flex-col justify-between gap-6 bg-gray-300 h-max rounded-2xl p-4">
+                <p class="font-bold text-lg">Resumen Compra</p>
+                <div class="flex flex-col gap-2">
+                    <div class="flex justify-between items-center">
+                        <p class="font-bold">Productos ( <span>0</span> )</p>
+                        <p class="font-bold">$ 0.00</p>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <p class="font-bold">Envio</p>
+                        <p class="font-bold">$ 0.00</p>
+                    </div>
+                    <p class="text-blue-600 font-bold cursor-pointer">Cupon Descuento</p>
+                </div>
+                <div class="flex justify-between items-center">
+                    <p class="font-bold text-2xl">Total</p>
+                    <p class="font-bold text-2xl">$ 0.00</p>
+                </div>
+                <button @click="inicio = 'tarjeta'" class="bg-emerald-600  py-2 rounded-lg border-2 cursor-pointer">Continuar Compra</button>
+            </div>
+        </article>
+        <!--Section de Tarjetas -->
+        <article x-show="inicio === 'tarjeta'" class="grid grid-cols-1 lg:grid-cols-4 place-content-center lg:h-[85vh] gap-4">
+            <div class="lg:col-span-3">
+                <!-- Contenedor de los productos agregados -->
+                <div class="bg-gray-300 p-5 rounded-2xl mb-4 lg:h-[70vh]">
+                    <h1 class="text-2xl font-bold">Tarjetas</h1>
+                    <!-- Productos Agregados al Carrito -->
+                    <div class="lg:overflow-y-scroll">
+
+                    </div>
+                </div>
+                <button @click="inicio = 'agregar_tarjeta'" class="bg-gray-300 w-full rounded-lg border-2 py-4 text-lg font-bold cursor-pointer">Agregar Tarjeta</button>
+            </div>
+            <!-- Resumen de la Compra -->
+            <div class="flex flex-col justify-between gap-6 bg-gray-300 h-max rounded-2xl p-4">
+                <p class="font-bold text-lg">Resumen Compra</p>
+                <div class="flex flex-col gap-2">
+                    <div class="flex justify-between items-center">
+                        <p class="font-bold">Productos ( <span>0</span> )</p>
+                        <p class="font-bold">$ 0.00</p>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <p class="font-bold">Envio</p>
+                        <p class="font-bold">$ 0.00</p>
+                    </div>
+                    <p class="text-blue-600 font-bold cursor-pointer">Cupon Descuento</p>
+                </div>
+                <div class="flex justify-between items-center">
+                    <p class="font-bold text-2xl">Total</p>
+                    <p class="font-bold text-2xl">$ 0.00</p>
+                </div>
+                <button @click="inicio = 'ticket'" class="bg-emerald-600  py-2 rounded-lg border-2 cursor-pointer">Comprar</button>
+            </div>
+        </article>
+        <!-- Nueva Direccion -->
+        <article x-show="inicio === 'agregar_direccion'" class="flex items-center justify-center md:h-[85vh]">
+            <div class="bg-gray-300 py-5 px-5 md:px-10 rounded-2xl w-full lg:w-3/4">
+                <h1 class="text-2xl font-bold mb-4 lg:mb-0">Nueva Direccion</h1>
+                <!-- Inputs -->
+                <form class="flex flex-col gap-1">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-6">
+                        <div class="flex flex-col gap-1">
+                            <label for="">Direccion o lugar entrega</label>
+                            <input class="border-2 px-2 py-1 rounded-lg bg-white" type="text" name="text" placeholder="Ej: Avenida juarez 234">
+                        </div>
+                        <div class="flex flex-col gap-1">
+                            <label for="">Codigo Postal</label>
+                            <input class="border-2 px-2 py-1 rounded-lg bg-white" type="text" name="text" placeholder="Ej: 86302">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-6">
+                        <div class="flex flex-col gap-1">
+                            <label for="">Estado</label>
+                            <input class="border-2 px-2 py-1 rounded-lg bg-white" type="text" name="text" placeholder="Debes seleccionar una opcion" readonly>
+                        </div>
+                        <div class="flex flex-col gap-1">
+                            <label for="">Municipio o alcadia</label>
+                            <input class="border-2 px-2 py-1 rounded-lg" type="text" name="text" readonly>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-6">
+                        <div class="flex flex-col gap-1">
+                            <label for="">Localidad</label>
+                            <input class="border-2 px-2 py-1 rounded-lg" type="text" name="text" readonly>
+                        </div>
+                        <div class="flex flex-col gap-1">
+                            <label for="">Colonia o barrio</label>
+                            <input class="border-2 px-2 py-1 rounded-lg" type="text" name="text" readonly>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-6">
+                        <div class="flex flex-col gap-1">
+                            <div class="flex flex-col gap-1">
+                                <label for="">Numero interior / (opcional)</label>
+                                <input class="border-2 px-2 py-1 rounded-lg bg-white" type="text" name="text" placeholder="Ej: 234">
+                            </div>
+                            <div>
+                                <p>Tipo de domicilio</p>
+                                <div class="flex items-center gap-2">
+                                    <input type="checkbox" name="checkbox">
+                                    <div class="flex items-center gap-1">
+                                        <img class="w-6" src="public/img/MaterialSymbolsLightCottageOutlineRounded.svg" alt="">
+                                        <p>Residencial</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <input type="checkbox" name="checkbox">
+                                    <div class="flex items-center gap-1">
+                                        <img class="w-6" src="public/img/MaterialSymbolsLightWorkHistoryOutline.svg" alt="">
+                                        <p>Laboral</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-col gap-1">
+                            <label for="">Indicaciones parra la entrega</label>
+                            <textarea class="border-2 p-2 rounded-lg bg-white h-full resize-none" type="text" name="text" placeholder="Ej: Entre calle, color del domicilio"></textarea>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-6">
+                        <div class="flex flex-col gap-1">
+                            <label for="">Nombre y Apellido</label>
+                            <input class="border-2 px-2 py-1 rounded-lg bg-white" type="text" name="text" placeholder="Ej: Angel Benitez">
+                        </div>
+                        <div class="flex flex-col gap-1">
+                            <label for="">Telefono</label>
+                            <input class="border-2 px-2 py-1 rounded-lg bg-white" type="text" name="text" placeholder="Ej: 9142334567">
+                        </div>
+                    </div>
+                </form>
+                <button @click="inicio = 'domicilio'" class="bg-emerald-600 w-full py-2 rounded-lg mt-4 border-2 cursor-pointer">Añadir Direccion</button>
+            </div>
+        </article>
+        <!-- Agregar Tarjeta -->
+        <article x-show="inicio === 'agregar_tarjeta'" class="flex items-center justify-center h-[85vh]">
+            <div class="bg-gray-300 py-5 px-5 md:px-10 rounded-2xl w-full md:w-3/4 lg:w-2/5">
+                <h1 class="text-2xl font-bold mb-4">Agregar una Tarjeta</h1>
+                <form class="flex flex-col gap-4" action="">
+                    <div class="flex flex-col gap-2">
+                        <label for="">Nombre del Titular</label>
+                        <input class="border-2 p-2 rounded-lg bg-white" type="text" name="text" placeholder="Ej: Angel Ramirez">
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <label for="">Numero de Tarjeta</label>
+                        <input class="border-2 p-2 rounded-lg bg-white" type="text" name="text" placeholder="Ej: 1234 5678 9012 3456">
+                    </div>
+                    <div class="grid grid-cols-2 gap-6">
+                        <div class="flex flex-col gap-1">
+                            <label for="">Fecha Vencimiento</label>
+                            <input class="border-2 p-2 rounded-lg bg-white" type="text" name="text" placeholder="MM / AA">
+                        </div>
+                        <div class="flex flex-col gap-1">
+                            <label for="">Codigo seguridad</label>
+                            <input class="border-2 p-2 rounded-lg bg-white" type="text" name="text" placeholder="CVV">
+                        </div>
+                    </div>
+                    <button @click="inicio = 'tarjeta'" class="bg-emerald-600 w-full py-2 rounded-lg mt-4 border-2 cursor-pointer">Añadir Tarjeta</button>
+                </form>
+            </div>
+        </article>
+        <!-- Ticket de compra -->
+        <article x-show="inicio === 'ticket'" class="flex items-center justify-center h-[85vh]">
+            <div class="flex flex-col justify-between bg-gray-300 py-5 px-5 md:px-10 rounded-2xl w-full md:w-4/6 lg:w-3/7">
+                <h1 class="text-2xl font-bold text-center">TICKET DE COMPRA</h1>
+                <!-- Productos Agregados al Carrito -->
+                <div class="">
+                    <hr>
+                    <div>
+                        <div class="flex items-center justify-between">
+                            <p>Fecha: <span>day/mes/ano</span></p>
+                            <p>Folio: #<span>000000</span></p>
+                        </div>
+                        <div class="flex items-center gap-16">
+                            <p>00:00 PM</p>
+                            <p>Angel Benitez</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <!-- Productos comprados -->
+                    <div>
+
+                    </div>
+                    <hr>
+                    <!-- Calcular precio y envio -->
+                    <div>
+                        <div class="flex items-center justify-between">
+                            <p>Subtotal</p>
+                            <p>00.00</p>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <p>Envio</p>
+                            <p>00.00</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <!-- Precio final a pagar -->
+                    <div class="flex items-center justify-between">
+                        <p>Total</p>
+                        <p>00.00</p>
+                    </div>
+                    <hr>
+                </div>
+                <h3 class="text-lg text-center font-bold my-6">!Gracias por su compra!</h3>
+                <div class="grid grid-cols-2 gap-4">
+                    <button @click="inicio = 'home'" class="bg-emerald-600 w-full py-2 rounded-lg border-2 cursor-pointer">Aceptar</button>
+                    <button class="bg-white w-full py-2 rounded-lg border-2 cursor-pointer">Descargar</button>
+                </div>
+            </div>
+        </article>
+    </section>
+</body>
+</html>

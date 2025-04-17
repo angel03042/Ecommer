@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="public/main.js" defer></script>
     <link rel="stylesheet" href="/src/output.css">
     <style>[x-cloak] { display: none !important; }</style>
     <style> html {scroll-behavior: smooth;} </style>
@@ -168,19 +169,16 @@
                     <p>Top Rated</p>
                 </div>
                 <!--Lista de Productos -->
-                <article>
+                <article class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-10 my-10" id="articulos">
     
                 </article>
                 <!-- Navegacion Productos -->
-                <div class="flex justify-center items-end gap-4 w-full h-full py-4">
-                    <div class="w-4 h-4 bg-blue-300 rounded-2xl border-2 cursor-pointer"></div>
-                    <div class="w-4 h-4 bg-white rounded-2xl border-2 cursor-pointer"></div>
-                    <div class="w-4 h-4 bg-white rounded-2xl border-2 cursor-pointer"></div>
-                    <div class="w-4 h-4 bg-white rounded-2xl border-2 cursor-pointer"></div>
+                <div id="buttonNavegacion" class="flex justify-center items-end gap-4 w-full h-full py-4">
+                    
                 </div>
             </article>
             <!-- Categoria Women's and Men's -->
-            <article class="grid md:grid-cols-2 gap-4 h[60vh] mb-10 md:mb-20">
+            <article class="grid md:grid-cols-2 gap-4 h[60vh] mb-10 md:mb-20 mt-5 md:mt-10">
                 <div class="relative">
                     <img class="rounded-2xl w-full h-full" src="public/img/modelo3.png" alt="">
                     <div class="absolute flex flex-col items-end gap-6 lg:gap-10 inset-0 p-4 lg:p-6">

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <script src="public/main.js" defer></script>
+    <script src="public/main.js" type="module" defer></script>
     <link rel="stylesheet" href="/src/output.css">
     <style>[x-cloak] { display: none !important; }</style>
     <style> html {scroll-behavior: smooth;} </style>
@@ -16,16 +16,19 @@
     <nav class="md:sticky md:top-0 md:z-50 bg-white flex justify-between items-center rounded-2xl mx-6 md:m-10 lg:mx-15 md:px-5 md:py-5 my-2 md:my-0">
         <h3 class="font-bold text-2xl">RopsMart</h3>
         <div class="md:flex items-center gap-16 hidden">
-            <a @click="inicio = 'home'" href="#Home" class="cursor-pointer">Home</a>
-            <a @click="inicio = 'home'" href="#Shop" class="cursor-pointer">Shop</a>
-            <a @click="inicio = 'home'" href="#Elements" class="cursor-pointer">Elements</a>
+            <a @click="inicio = 'home'" href="#Home" class="cursor-pointer">Inicio</a>
+            <a @click="inicio = 'home'" href="#Shop" class="cursor-pointer">Elementos</a>
+            <a @click="inicio = 'home'" href="#Elements" class="cursor-pointer">Productos</a>
         </div>
         <div class="md:flex gap-4 hidden">
             <a href="public/login.html"><img class="w-8 cursor-pointer" src="/public/img/MaterialSymbolsLightSupervisedUserCircle.svg" alt=""></a>
-            <img @click="inicio = 'favorito'" class="w-8 cursor-pointer" src="/public/img/MaterialSymbolsLightFavoriteOutline.svg" alt="">
+            <div class="relative">
+                <img @click="inicio = 'favorito'" class="w-8 cursor-pointer" src="/public/img/MaterialSymbolsLightFavoriteOutline.svg" alt="">
+                <div class="absolute inset-0 left-3/4 -top-1/2"><span id="contadorFavoritos" class="bg-blue-700 rounded-2xl px-1.5 border-1 border-black text-white font-bold">0</span></div>
+            </div>
             <div class="relative">
                 <img @click="inicio = 'compra'" class="w-8 cursor-pointer" src="/public/img/MaterialSymbolsLightAddShoppingCartRounded.svg" alt="">
-                <div class="absolute inset-0 left-3/4 -top-1/2"><span class="bg-amber-700 rounded-2xl px-1.5 border-1 border-black text-white font-bold">0</span></div>
+                <div class="absolute inset-0 left-3/4 -top-1/2"><span id="contadorCarrito" class="bg-amber-700 rounded-2xl px-1.5 border-1 border-black text-white font-bold">0</span></div>
             </div>
         </div>
         <!-- menu movil -->
@@ -46,7 +49,7 @@
     </nav>
     <section x-show="inicio === 'home'">
         <header x-data="{anuncio: 'one'}" x-data="{inicio: 'home'}" class="w-full h-screen">
-            <section class="relative">
+            <section class="relative" x-data="slider()" x-init="iniciarSlider()" @mouseenter="pausarSlider()" @mouseleave="iniciarSlider()" class="relative">
             <!-- Section Anuncio 1-->
             <main x-show="anuncio === 'one'" class="grid lg:grid-cols-2 h-[70vh] md:h-[80vh] lg:h-[70vh] 2xl:h-[80vh] bg-fuchsia-300 overflow-hidden">
                 <div class="flex flex-col justify-center items-center gap-8">
@@ -57,8 +60,8 @@
                     <span class="flex flex-col gap-4 text-center">
                         <p class="text-xl md:text-2xl">Min. 30-70% off</p>
                         <div class="flex gap-8">
-                            <button class="bg-blue-400 px-6 py-2 cursor-pointer">SHOP NOW</button>
-                            <button class="bg-white px-6 py-2 border-2 cursor-pointer">READ MORE</button>
+                            <button class="bg-blue-400 px-6 py-2 cursor-pointer">Comprar Ahora</button>
+                            <button class="bg-white px-6 py-2 border-2 cursor-pointer">Ver Mas</button>
                         </div>
                     </span>
                 </div>
@@ -75,8 +78,8 @@
                     <span class="flex flex-col text-center gap-3 lg:gap-6 items-center">
                         <h2 class="font-[Great_Vibes] italic text-4xl md:text-5xl text-white">Season Sale</h2>
                         <h1 class="text-6xl md:text-7xl font-bold text-white">WOMEN'S FASHION</h1>
-                        <p class="text-xl md:text-2xl text-white">Min. 50-780% off</p>
-                        <button class="bg-blue-400 px-6 py-2 cursor-pointer w-max">SHOP NOW</button>
+                        <p class="text-xl md:text-2xl text-white">Min. 50-78% off</p>
+                        <button class="bg-blue-400 px-6 py-2 cursor-pointer w-max">Comprar Ahora</button>
                     </span>
                 </div>
             </main>
@@ -87,36 +90,38 @@
             </div>
             </section>
             <!-- Promociones -->
-            <div id="Shop" class="flex justify-between items-center gap-2 md:gap-0 flex-wrap mx-6 md:mx-10 lg:mx-20 my-6">
-                <div class="flex items-center gap-2 lg:gap-4">
+            <div class="overflow-hidden relative w-full px-6 my-6">
+                <div class="marquee flex gap-6 w-max">
+                  <div class="item flex items-center gap-4 min-w-[250px]">
                     <img class="w-10 lg:w-14" src="/public/img/MaterialSymbolsLightShoppingBagSpeedOutline.svg" alt="">
-                    <div class="">
-                        <p class="font-bold text-sm lg:text-lg">Free Shipping</p>
-                        <p class="text-xs lg:text-sm">On All Dificult you</p>
+                    <div>
+                      <p class="font-bold text-sm lg:text-lg">Free Shipping</p>
+                      <p class="text-xs lg:text-sm">On All Dificult you</p>
                     </div>
-                </div>
-                <div class="flex items-center gap-2 lg:gap-4">
+                  </div>
+                  <div class="item flex items-center gap-4 min-w-[250px]">
                     <img class="w-10 lg:w-14" src="/public/img/MaterialSymbolsLightHandshakeOutline.svg" alt="">
                     <div>
-                        <p class="font-bold text-sm lg:text-lg">Secure Payment</p>
-                        <p class="text-xs lg:text-sm">We secure payment</p>
+                      <p class="font-bold text-sm lg:text-lg">Secure Payment</p>
+                      <p class="text-xs lg:text-sm">We secure payment</p>
                     </div>
-                </div>
-                <div class="flex items-center gap-2 lg:gap-4">
+                  </div>
+                  <div class="item flex items-center gap-4 min-w-[250px]">
                     <img class="w-10 lg:w-14" src="/public/img/MaterialSymbolsLightUniversalCurrencyAltOutlineRounded.svg" alt="">
                     <div>
-                        <p class="font-bold text-sm lg:text-lg">100% Money</p>
-                        <p class="text-xs lg:text-sm">Very Days Return</p>
+                      <p class="font-bold text-sm lg:text-lg">100% Money</p>
+                      <p class="text-xs lg:text-sm">Very Days Return</p>
                     </div>
-                </div>
-                <div class="flex items-center gap-2 lg:gap-4">
+                  </div>
+                  <div class="item flex items-center gap-4 min-w-[250px]">
                     <img class="w-10 lg:w-14" src="/public/img/MaterialSymbolsLightElectricalServicesRounded.svg" alt="">
                     <div>
-                        <p class="font-bold text-sm lg:text-lg">Online Support</p>
-                        <p class="text-xs lg:text-sm">24/? Dedcated support</p>
+                      <p class="font-bold text-sm lg:text-lg">Online Support</p>
+                      <p class="text-xs lg:text-sm">24/? Dedicated support</p>
                     </div>
+                  </div>
                 </div>
-            </div>
+            </div>                        
         </header>
         <section class="mx-6 md:mx-10 lg:mx-20">
             <!-- Elementos -->
@@ -164,16 +169,23 @@
             <article id="Elements">
                 <h1 class="text-center font-bold text-2xl mb-6">Featured Products</h1>
                 <div class="flex justify-center gap-10">
-                    <p class="border-b-2 font-bold border-b-blue-700">New Arrival</p>
-                    <p>Best Selling</p>
-                    <p>Top Rated</p>
+                    <button @click="product = 'newArrival'" class="border-b-2 font-bold border-b-blue-700 cursor-pointer">New Arrival</button>
+                    <button @click="product = 'bestSelling'" class="cursor-pointer">Best Selling</button>
+                    <button>Top Rated</button>
                 </div>
-                <!--Lista de Productos -->
-                <article class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-10 my-10" id="articulos">
+                <!-- Loading mientras cargan los productos -->
+                <div id="loading" class="flex flex-row justify-center items-center gap-2 my-10">
+                    <div class="w-4 h-4 rounded-full bg-purple-700 animate-bounce [animation-delay:.7s]"></div>
+                    <div class="w-4 h-4 rounded-full bg-blue-700 animate-bounce [animation-delay:.3s]"></div>
+                    <div class="w-4 h-4 rounded-full bg-red-700 animate-bounce [animation-delay:.7s]"></div>
+                    <div class="w-4 h-4 rounded-full bg-blue-700 animate-bounce [animation-delay:.3s]"></div>
+                </div>
+                <!--Lista de Productos "New Arrival"-->
+                <article class="product grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-10 my-10" id="articulos">
     
                 </article>
                 <!-- Navegacion Productos -->
-                <div id="buttonNavegacion" class="flex justify-center items-end gap-4 w-full h-full py-4">
+                <div id="buttonNavegacion" class="product flex justify-center items-end gap-4 w-full h-full py-4">
                     
                 </div>
             </article>
@@ -207,11 +219,11 @@
     <!-- Compras -->
     <section class="mx-6 my-6 md:my-0 md:mx-10 lg:mx-20">
         <!-- Favoritos -->
-        <article x-show="inicio === 'favorito'" class="flex items-start md:items-center justify-center h-[85vh]">
-            <div class="md:bg-gray-300 py-5 md:px-10 rounded-2xl w-full md:w-4/5 lg:w-3/4 md:h-full">
-                <h1 class="text-lg md:text-2xl font-bold">Favoritos</h1>
+        <article x-show="inicio === 'favorito'" class="flex items-start md:items-center justify-center ">
+            <div class="md:bg-gray-300 mb-10 py-5 md:px-10 rounded-2xl w-full md:w-4/5 lg:w-3/4 md:h-full">
+                <h1 class="text-lg mb-4 md:text-2xl font-bold">Favoritos</h1>
                 <!-- Productos Agregados al Carrito -->
-                <div class="overflow-y-scroll">
+                <div id="listaFavoritos" class="flex flex-col gap-4">
 
                 </div>
             </div>
@@ -219,10 +231,10 @@
         <!-- Section de los productos -->
         <article x-show="inicio === 'compra'" class="grid grid-cols-1 lg:grid-cols-4 place-content-center my-10 md:my-0 lg:h-[85vh] gap-4">
             <!-- Contenedor de los productos agregados -->
-            <div class="lg:col-span-3 bg-gray-300 p-5 rounded-2xl lg:h-[80vh]">
-                <h1 class="text-2xl font-bold">Productos</h1>
+            <div class="lg:col-span-3 bg-gray-300 p-5 rounded-2xl">
+                <h1 class="text-2xl font-bold mb-4">Productos</h1>
                 <!-- Productos Agregados al Carrito -->
-                <div class="lg:overflow-y-scroll">
+                <div class="listaCarrito flex flex-col gap-2 lg:overflow-y-scroll lg:h-[70vh]">
 
                 </div>
             </div>
@@ -231,18 +243,18 @@
                 <p class="font-bold text-lg">Resumen Compra</p>
                 <div class="flex flex-col gap-2">
                     <div class="flex justify-between items-center">
-                        <p class="font-bold">Productos ( <span>0</span> )</p>
-                        <p class="font-bold">$ 0.00</p>
+                        <p class="font-bold">Productos ( <span class="productos">0</span> )</p>
+                        <p class="precioProductos font-bold">$ 0.00</p>
                     </div>
                     <div class="flex justify-between items-center">
                         <p class="font-bold">Envio</p>
-                        <p class="font-bold">$ 0.00</p>
+                        <p class="precioEnvio font-bold">$ 0.00</p>
                     </div>
                     <p class="text-blue-600 font-bold cursor-pointer">Cupon Descuento</p>
                 </div>
                 <div class="flex justify-between items-center">
                     <p class="font-bold text-2xl">Total</p>
-                    <p class="font-bold text-2xl">$ 0.00</p>
+                    <p class="precioTotal font-bold text-2xl">$ 0.00</p>
                 </div>
                 <button @click="inicio = 'domicilio'" class="bg-emerald-600  py-2 rounded-lg border-2 cursor-pointer">Continuar Compra</button>
             </div>
@@ -252,9 +264,9 @@
             <div class="lg:col-span-3">
                 <!-- Contenedor de los productos agregados -->
                 <div class="bg-gray-300 p-5 rounded-2xl mb-4 lg:h-[70vh]">
-                    <h1 class="text-2xl font-bold">Direccion</h1>
+                    <h1 class="text-2xl font-bold mb-4">Direccion</h1>
                     <!-- Productos Agregados al Carrito -->
-                    <div class="lg:overflow-y-scroll">
+                    <div id="containerDireccion" class="flex flex-col lg:overflow-y-scroll">
 
                     </div>
                 </div>
@@ -265,18 +277,18 @@
                 <p class="font-bold text-lg">Resumen Compra</p>
                 <div class="flex flex-col gap-2">
                     <div class="flex justify-between items-center">
-                        <p class="font-bold">Productos ( <span>0</span> )</p>
-                        <p class="font-bold">$ 0.00</p>
+                        <p class="font-bold">Productos ( <span class="productos">0</span> )</p>
+                        <p class="precioProductos font-bold">$ 0.00</p>
                     </div>
                     <div class="flex justify-between items-center">
                         <p class="font-bold">Envio</p>
-                        <p class="font-bold">$ 0.00</p>
+                        <p class="precioEnvio font-bold">$ 0.00</p>
                     </div>
                     <p class="text-blue-600 font-bold cursor-pointer">Cupon Descuento</p>
                 </div>
                 <div class="flex justify-between items-center">
                     <p class="font-bold text-2xl">Total</p>
-                    <p class="font-bold text-2xl">$ 0.00</p>
+                    <p class="precioTotal font-bold text-2xl">$ 0.00</p>
                 </div>
                 <button @click="inicio = 'tarjeta'" class="bg-emerald-600  py-2 rounded-lg border-2 cursor-pointer">Continuar Compra</button>
             </div>
@@ -285,10 +297,10 @@
         <article x-show="inicio === 'tarjeta'" class="grid grid-cols-1 lg:grid-cols-4 place-content-center lg:h-[85vh] gap-4">
             <div class="lg:col-span-3">
                 <!-- Contenedor de los productos agregados -->
-                <div class="bg-gray-300 p-5 rounded-2xl mb-4 lg:h-[70vh]">
-                    <h1 class="text-2xl font-bold">Tarjetas</h1>
+                <div class="bg-gray-300 p-5 rounded-2xl mb-4">
+                    <h1 class="text-2xl font-bold mb-4">Tarjetas</h1>
                     <!-- Productos Agregados al Carrito -->
-                    <div class="lg:overflow-y-scroll">
+                    <div id="containerTarjetas" class="lg:overflow-y-scroll lg:h-[55vh]">
 
                     </div>
                 </div>
@@ -299,75 +311,77 @@
                 <p class="font-bold text-lg">Resumen Compra</p>
                 <div class="flex flex-col gap-2">
                     <div class="flex justify-between items-center">
-                        <p class="font-bold">Productos ( <span>0</span> )</p>
-                        <p class="font-bold">$ 0.00</p>
+                        <p class="font-bold">Productos ( <span class="productos">0</span> )</p>
+                        <p class="precioProductos font-bold">$ 0.00</p>
                     </div>
                     <div class="flex justify-between items-center">
                         <p class="font-bold">Envio</p>
-                        <p class="font-bold">$ 0.00</p>
+                        <p class="precioEnvio font-bold">$ 0.00</p>
                     </div>
                     <p class="text-blue-600 font-bold cursor-pointer">Cupon Descuento</p>
                 </div>
                 <div class="flex justify-between items-center">
                     <p class="font-bold text-2xl">Total</p>
-                    <p class="font-bold text-2xl">$ 0.00</p>
+                    <p class="precioTotal font-bold text-2xl">$ 0.00</p>
                 </div>
-                <button @click="inicio = 'ticket'" class="bg-emerald-600  py-2 rounded-lg border-2 cursor-pointer">Comprar</button>
+                <button @click="inicio = 'ticket'" id="btn-generar-ticket" class="bg-emerald-600  py-2 rounded-lg border-2 cursor-pointer">Comprar</button>
             </div>
         </article>
         <!-- Nueva Direccion -->
-        <article x-show="inicio === 'agregar_direccion'" class="flex items-center justify-center md:h-[85vh]">
+        <article x-show="inicio === 'agregar_direccion'" class="flex items-center justify-center my-2">
             <div class="bg-gray-300 py-5 px-5 md:px-10 rounded-2xl w-full lg:w-3/4">
                 <h1 class="text-2xl font-bold mb-4 lg:mb-0">Nueva Direccion</h1>
                 <!-- Inputs -->
-                <form class="flex flex-col gap-1">
+                <form id="formDireccion" class="flex flex-col gap-1">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-6">
                         <div class="flex flex-col gap-1">
                             <label for="">Direccion o lugar entrega</label>
-                            <input class="border-2 px-2 py-1 rounded-lg bg-white" type="text" name="text" placeholder="Ej: Avenida juarez 234">
+                            <input id="direccionEntrega" class="campos border-2 px-2 py-1 rounded-lg bg-white" type="text" name="text" placeholder="Ej: Avenida juarez 234">
                         </div>
                         <div class="flex flex-col gap-1">
                             <label for="">Codigo Postal</label>
-                            <input class="border-2 px-2 py-1 rounded-lg bg-white" type="text" name="text" placeholder="Ej: 86302">
+                            <input id="codigoPostal" class="campos border-2 px-2 py-1 rounded-lg bg-white" type="text" name="text" inputmode="numeric" pattern="\d*" oninput="this.value = this.value.replace(/[^0-9]/g, '')" placeholder="Ej: 86302" maxlength="5">
                         </div>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-6">
                         <div class="flex flex-col gap-1">
                             <label for="">Estado</label>
-                            <input class="border-2 px-2 py-1 rounded-lg bg-white" type="text" name="text" placeholder="Debes seleccionar una opcion" readonly>
+                            <input id="estado" class="campos border-2 px-2 py-1 rounded-lg" type="text" name="text" readonly>
                         </div>
                         <div class="flex flex-col gap-1">
                             <label for="">Municipio o alcadia</label>
-                            <input class="border-2 px-2 py-1 rounded-lg" type="text" name="text" readonly>
+                            <input id="municipio" class="campos border-2 px-2 py-1 rounded-lg" type="text" name="text" readonly>
                         </div>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-6">
                         <div class="flex flex-col gap-1">
                             <label for="">Localidad</label>
-                            <input class="border-2 px-2 py-1 rounded-lg" type="text" name="text" readonly>
+                            <input class="campos border-2 px-2 py-1 rounded-lg bg-white" type="text" name="text">
                         </div>
                         <div class="flex flex-col gap-1">
                             <label for="">Colonia o barrio</label>
-                            <input class="border-2 px-2 py-1 rounded-lg" type="text" name="text" readonly>
+                            <select id="colonia" class="campos border-2 px-2 py-1 rounded-lg" type="text" name="colonia">
+                                <option value="">Selecciona colonia</option>
+                            </select>
                         </div>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-6">
                         <div class="flex flex-col gap-1">
                             <div class="flex flex-col gap-1">
                                 <label for="">Numero interior / (opcional)</label>
-                                <input class="border-2 px-2 py-1 rounded-lg bg-white" type="text" name="text" placeholder="Ej: 234">
+                                <input class="campos border-2 px-2 py-1 rounded-lg bg-white" type="text" name="text" placeholder="Ej: 234">
                             </div>
                             <div>
                                 <p>Tipo de domicilio</p>
                                 <div class="flex items-center gap-2">
-                                    <input type="checkbox" name="checkbox">
+                                    <input type="radio" class="campos" name="radio">
                                     <div class="flex items-center gap-1">
                                         <img class="w-6" src="public/img/MaterialSymbolsLightCottageOutlineRounded.svg" alt="">
                                         <p>Residencial</p>
                                     </div>
                                 </div>
                                 <div class="flex items-center gap-2">
-                                    <input type="checkbox" name="checkbox">
+                                    <input type="radio" class="campos" name="radio">
                                     <div class="flex items-center gap-1">
                                         <img class="w-6" src="public/img/MaterialSymbolsLightWorkHistoryOutline.svg" alt="">
                                         <p>Laboral</p>
@@ -377,99 +391,125 @@
                         </div>
                         <div class="flex flex-col gap-1">
                             <label for="">Indicaciones parra la entrega</label>
-                            <textarea class="border-2 p-2 rounded-lg bg-white h-full resize-none" type="text" name="text" placeholder="Ej: Entre calle, color del domicilio"></textarea>
+                            <textarea class="campos border-2 p-2 rounded-lg bg-white h-full resize-none" type="text" name="text" placeholder="Ej: Entre calle, color del domicilio"></textarea>
                         </div>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-6">
                         <div class="flex flex-col gap-1">
                             <label for="">Nombre y Apellido</label>
-                            <input class="border-2 px-2 py-1 rounded-lg bg-white" type="text" name="text" placeholder="Ej: Angel Benitez">
+                            <input class="campos border-2 px-2 py-1 rounded-lg bg-white" type="text" name="text" placeholder="Ej: Angel Benitez">
                         </div>
                         <div class="flex flex-col gap-1">
                             <label for="">Telefono</label>
-                            <input class="border-2 px-2 py-1 rounded-lg bg-white" type="text" name="text" placeholder="Ej: 9142334567">
+                            <input class="campos border-2 px-2 py-1 rounded-lg bg-white" type="text" name="text" inputmode="numeric" pattern="\d*" oninput="this.value = this.value.replace(/[^0-9]/g, '')" placeholder="Ej: 9142334567">
                         </div>
                     </div>
+                    <p id="alertDireccion" class="hidden text-red-900 font-bold">Rellene los campos</p>
+                    <button @click="inicio = 'domicilio'" class="bg-emerald-600 w-full py-2 rounded-lg mt-4 border-2 cursor-pointer">Añadir Direccion</button>
                 </form>
-                <button @click="inicio = 'domicilio'" class="bg-emerald-600 w-full py-2 rounded-lg mt-4 border-2 cursor-pointer">Añadir Direccion</button>
             </div>
         </article>
         <!-- Agregar Tarjeta -->
         <article x-show="inicio === 'agregar_tarjeta'" class="flex items-center justify-center h-[85vh]">
             <div class="bg-gray-300 py-5 px-5 md:px-10 rounded-2xl w-full md:w-3/4 lg:w-2/5">
                 <h1 class="text-2xl font-bold mb-4">Agregar una Tarjeta</h1>
-                <form class="flex flex-col gap-4" action="">
+                <form id="formTarjeta" class="flex flex-col gap-4" action="">
                     <div class="flex flex-col gap-2">
                         <label for="">Nombre del Titular</label>
-                        <input class="border-2 p-2 rounded-lg bg-white" type="text" name="text" placeholder="Ej: Angel Ramirez">
+                        <input id="nombreTitular" class="inputs border-2 p-2 rounded-lg bg-white" type="text" name="text" placeholder="Ej: Angel Ramirez">
                     </div>
                     <div class="flex flex-col gap-2">
                         <label for="">Numero de Tarjeta</label>
-                        <input class="border-2 p-2 rounded-lg bg-white" type="text" name="text" placeholder="Ej: 1234 5678 9012 3456">
+                        <input id="numeroTarjeta" class="inputs border-2 p-2 rounded-lg bg-white" type="text" name="text" maxlength="16" inputmode="numeric" pattern="\d*" oninput="this.value = this.value.replace(/[^0-9]/g, '')" placeholder="Ej: 1234 5678 9012 3456">
                     </div>
                     <div class="grid grid-cols-2 gap-6">
                         <div class="flex flex-col gap-1">
                             <label for="">Fecha Vencimiento</label>
-                            <input class="border-2 p-2 rounded-lg bg-white" type="text" name="text" placeholder="MM / AA">
+                            <input class="inputs border-2 p-2 rounded-lg bg-white" type="text" name="text" placeholder="MM / AA">
                         </div>
                         <div class="flex flex-col gap-1">
                             <label for="">Codigo seguridad</label>
-                            <input class="border-2 p-2 rounded-lg bg-white" type="text" name="text" placeholder="CVV">
+                            <input class="inputs border-2 p-2 rounded-lg bg-white" type="text" name="text" maxlength="3" inputmode="numeric" pattern="\d*" oninput="this.value = this.value.replace(/[^0-9]/g, '')" placeholder="CVV">
                         </div>
                     </div>
+                    <p id="alertTarjeta" class="hidden text-red-900 font-bold">Rellene los campos</p>
                     <button @click="inicio = 'tarjeta'" class="bg-emerald-600 w-full py-2 rounded-lg mt-4 border-2 cursor-pointer">Añadir Tarjeta</button>
                 </form>
             </div>
         </article>
         <!-- Ticket de compra -->
-        <article x-show="inicio === 'ticket'" class="flex items-center justify-center h-[85vh]">
+        <article x-show="inicio === 'ticket'" class="flex items-center justify-center my-2">
             <div class="flex flex-col justify-between bg-gray-300 py-5 px-5 md:px-10 rounded-2xl w-full md:w-4/6 lg:w-3/7">
-                <h1 class="text-2xl font-bold text-center">TICKET DE COMPRA</h1>
+                <h1 class="text-2xl font-bold text-center mb-4">TICKET DE COMPRA</h1>
                 <!-- Productos Agregados al Carrito -->
                 <div class="">
                     <hr>
-                    <div>
+                    <div class="my-2">
                         <div class="flex items-center justify-between">
-                            <p>Fecha: <span>day/mes/ano</span></p>
-                            <p>Folio: #<span>000000</span></p>
+                            <p class="font-bold">Fecha: <span id="fecha" class="font-normal"></span></p>
+                            <p class="font-bold">Folio: #<span id="folio" class="font-normal"></span></p>
                         </div>
                         <div class="flex items-center gap-16">
-                            <p>00:00 PM</p>
+                            <p id="hora"></p>
                             <p>Angel Benitez</p>
                         </div>
                     </div>
                     <hr>
                     <!-- Productos comprados -->
-                    <div>
+                    <div id="container_product_shop" class="my-2">
 
                     </div>
                     <hr>
                     <!-- Calcular precio y envio -->
-                    <div>
+                    <div class="my-2">
                         <div class="flex items-center justify-between">
-                            <p>Subtotal</p>
-                            <p>00.00</p>
+                            <p class="font-bold">Subtotal</p>
+                            <p id="Subtotal"></p>
                         </div>
                         <div class="flex items-center justify-between">
-                            <p>Envio</p>
-                            <p>00.00</p>
+                            <p class="font-bold">Envio</p>
+                            <p id="envioProduct"></p>
                         </div>
                     </div>
                     <hr>
                     <!-- Precio final a pagar -->
-                    <div class="flex items-center justify-between">
-                        <p>Total</p>
-                        <p>00.00</p>
+                    <div class="flex items-center justify-between my-2">
+                        <p class="font-bold text-xl">Total</p>
+                        <p id="total" class="font-bold"></p>
                     </div>
                     <hr>
                 </div>
                 <h3 class="text-lg text-center font-bold my-6">!Gracias por su compra!</h3>
                 <div class="grid grid-cols-2 gap-4">
-                    <button @click="inicio = 'home'" class="bg-emerald-600 w-full py-2 rounded-lg border-2 cursor-pointer">Aceptar</button>
+                    <button @click="inicio = 'home'" id="compraAceptada" class="bg-emerald-600 w-full py-2 rounded-lg border-2 cursor-pointer">Aceptar</button>
                     <button class="bg-white w-full py-2 rounded-lg border-2 cursor-pointer">Descargar</button>
                 </div>
             </div>
         </article>
     </section>
+
+    <script>
+        function slider() {
+          return {
+            anuncio: 'one',
+            intervalo: null,
+      
+            iniciarSlider() {
+              this.intervalo = setInterval(() => {
+                this.anuncio = this.anuncio === 'one' ? 'two' : 'one';
+              }, 5000);
+            },
+      
+            pausarSlider() {
+              clearInterval(this.intervalo);
+              this.intervalo = null;
+            }
+          }
+        }
+        
+        const marquee = document.querySelector('.marquee');
+        marquee.innerHTML += marquee.innerHTML; // duplicamos el contenido visualmente
+
+    </script>      
 </body>
 </html>

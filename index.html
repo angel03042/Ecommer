@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="public/main.js" type="module" defer></script>
     <link rel="stylesheet" href="/src/output.css">
     <style>[x-cloak] { display: none !important; }</style>
@@ -17,8 +18,8 @@
         <h3 class="font-bold text-2xl">RopsMart</h3>
         <div class="md:flex items-center gap-16 hidden">
             <a @click="inicio = 'home'" href="#Home" class="cursor-pointer">Inicio</a>
-            <a @click="inicio = 'home'" href="#Shop" class="cursor-pointer">Elementos</a>
-            <a @click="inicio = 'home'" href="#Elements" class="cursor-pointer">Productos</a>
+            <a @click="inicio = 'home'" href="#Elementos" class="cursor-pointer">Elementos</a>
+            <a @click="inicio = 'home'" href="#Productos" class="cursor-pointer">Productos</a>
         </div>
         <div class="md:flex gap-4 hidden">
             <a href="public/login.html"><img class="w-8 cursor-pointer" src="/public/img/MaterialSymbolsLightSupervisedUserCircle.svg" alt=""></a>
@@ -90,7 +91,7 @@
             </div>
             </section>
             <!-- Promociones -->
-            <div class="overflow-hidden relative w-full px-6 my-6">
+            <div id="Elementos" class="overflow-hidden relative w-full px-6 my-6">
                 <div class="marquee flex gap-6 w-max">
                   <div class="item flex items-center gap-4 min-w-[250px]">
                     <img class="w-10 lg:w-14" src="/public/img/MaterialSymbolsLightShoppingBagSpeedOutline.svg" alt="">
@@ -166,12 +167,12 @@
                 </div>
             </article>
             <!-- Productos -->
-            <article id="Elements">
+            <article id="Productos">
                 <h1 class="text-center font-bold text-2xl mb-6">Featured Products</h1>
                 <div class="flex justify-center gap-10">
-                    <button @click="product = 'newArrival'" class="border-b-2 font-bold border-b-blue-700 cursor-pointer">New Arrival</button>
-                    <button @click="product = 'bestSelling'" class="cursor-pointer">Best Selling</button>
-                    <button>Top Rated</button>
+                    <button id="btnNewArrival" class="filtro-btn border-b-2 font-bold border-b-blue-700 cursor-pointer">New Arrival</button>
+                    <button id="btnBestSelling" class="filtro-btn cursor-pointer">Best Selling</button>
+                    <button id="btnTopRated" class="filtro-btn cursor-pointer">Top Rated</button>
                 </div>
                 <!-- Loading mientras cargan los productos -->
                 <div id="loading" class="flex flex-row justify-center items-center gap-2 my-10">
@@ -482,7 +483,7 @@
                 <h3 class="text-lg text-center font-bold my-6">!Gracias por su compra!</h3>
                 <div class="grid grid-cols-2 gap-4">
                     <button @click="inicio = 'home'" id="compraAceptada" class="bg-emerald-600 w-full py-2 rounded-lg border-2 cursor-pointer">Aceptar</button>
-                    <button class="bg-white w-full py-2 rounded-lg border-2 cursor-pointer">Descargar</button>
+                    <button id="descargarTicket" class="bg-white w-full py-2 rounded-lg border-2 cursor-pointer">Descargar</button>
                 </div>
             </div>
         </article>

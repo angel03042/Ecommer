@@ -1,3 +1,5 @@
+import { renderizarCarrito } from "./carrito.js";
+
 export function generarTicket() {
     // Obtener fecha y hora
     const fecha = new Date();
@@ -67,7 +69,12 @@ export function generarTicket() {
         divProduct.appendChild(priceProducto);
         container.appendChild(divProduct);
     });
-
-
 }
-  
+
+//Vaciar el carrito al confirmar el pedido
+export function vaciarCarrito(){
+    document.querySelector('#compraAceptada').addEventListener('click', () => {
+        localStorage.removeItem('carrito')
+        renderizarCarrito()
+    })
+}

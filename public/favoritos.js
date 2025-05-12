@@ -54,6 +54,7 @@ export function renderizarFavoritos() {
         const btnComprar = document.createElement("button");
         btnComprar.textContent = 'Comprar'
         btnComprar.className = 'text-green-800 font-bold cursor-pointer text-xs md:text-sm mt-1 hover:underline';
+        btnComprar.setAttribute("x-on:click", "inicio = 'domicilio'");
 
         const btnAgregarCarrito = document.createElement("button");
         btnAgregarCarrito.textContent = 'Agregar Carrito'

@@ -9,6 +9,60 @@ import { btnDescargarTicket } from "./ticketPDF.js";
 document.getElementById("articulos").style.display = "none";
 document.getElementById("buttonNavegacion").style.display = "none";
 
+//cookis
+
+const cooki = document.querySelector("#cookis");
+
+if (!cookiesAceptadas() && !cookiesRechazadas()) {
+  cooki.classList.remove("hidden");
+  cooki.classList.add("block");
+  document.body.classList.add("overflow-hidden");
+  document.querySelectorAll(".web").forEach((element) => {
+    element.classList.add("opacity-50", "pointer-events-none");
+  });
+}
+
+// Funciones de control de cookies
+function cookiesAceptadas() {
+  return document.cookie.includes("cookiesAceptadas=true");
+}
+
+function cookiesRechazadas() {
+  return document.cookie.includes("cookiesAceptadas=false");
+}
+
+// Aceptar cookies
+btnAceptar.addEventListener("click", () => {
+  document.cookie = "cookiesAceptadas=true; max-age=31536000; path=/";
+  cooki.classList.remove("block");
+  cooki.classList.add('hidden');
+  document.body.classList.remove("overflow-hidden");
+  document.querySelectorAll(".web").forEach((element) => {
+    element.classList.remove("opacity-50", "pointer-events-none");
+    element.classList.add("opacity-100", "pointer-events-auto");
+  });
+});
+
+// Rechazar cookies
+btnRechazar.addEventListener("click", () => {
+  document.cookie = "cookiesAceptadas=false; max-age=31536000; path=/";
+  localStorage.clear();
+  cooki.classList.remove("block");
+  cooki.classList.add("hidden");
+  document.body.classList.remove("overflow-hidden");
+  document.querySelectorAll(".web").forEach((element) => {
+    element.classList.remove('opacity-50','pointer-events-none');
+    element.classList.add("opacity-100", "pointer-events-auto");
+  });
+});
+
+// Si las rechazó, limpiar al salir también
+if (cookiesRechazadas()) {
+  window.addEventListener("beforeunload", () => {
+    localStorage.clear();
+  });
+}
+
 fetch(
   "https://script.google.com/macros/s/AKfycbwwf4MsmP0c1VyApxeAPzPXsyxg4mQ7ui7TOVL3jbrjJz00Pj9v0WgEFSAuIlCyKspq/exec"
 )
@@ -84,7 +138,8 @@ fetch(
       let buttonCompra = document.createElement("button");
       let buttonAgregarCarrito = document.createElement("button");
 
-      tarjeta.className = "grid grid-rows-[250px_auto] lg:grid-rows-[400px_auto] gap-4";
+      tarjeta.className =
+        "grid grid-rows-[250px_auto] lg:grid-rows-[400px_auto] gap-4";
 
       img.src = element.imagen;
       img.className = "w-full h-full object-cover";
@@ -341,5 +396,6 @@ document.querySelector("#formDireccion").addEventListener("submit", (e) => {
 });
 
 // Generar ticket
-document.getElementById("btn-generar-ticket").addEventListener("click", generarTicket);
-
+document
+  .getElementById("btn-generar-ticket")
+  .addEventListener("click", generarTicket);

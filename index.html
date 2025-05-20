@@ -12,23 +12,35 @@
     <style> html {scroll-behavior: smooth;} </style>
     <title>RopsMart</title>
 </head>
-<body x-data="{inicio: 'home'}" id="Home" class="m-0 p-0">
+<body x-data="navegacion()" x-init="init()" id="home" class="m-0 p-0">
+    <!--Cookis-->
+    <div id="cookis" class="hidden">
+        <div class="w-full h-screen absolute flex justify-center items-center z-10">
+            <div class="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 w-4/5 lg:w-1/4 rounded-2xl px-8 py-4 flex flex-col justify-center items-center">
+                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjgiIGhlaWdodD0iMTI4IiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxwYXRoIGZpbGw9IiMwMDAwMDAiIGQ9Ik0xMiAyMS41cS0xLjk3OSAwLTMuNzA4LS43NDl0LTMuMDExLTIuMDMydC0yLjAzMi0zLjAxMVEyLjUgMTMuOTc4IDIuNSAxMnEwLTIuMDQ0LjgzOC0zLjg2cS44MzctMS44MTcgMi4yNjctMy4xNDJUOC45MyAyLjk5dDQuMDE5LS40NnEuMjQuMDMyLjM4My4yMDh0LjE2Ny40MzNxLjEwOCAxLjg1IDEuMjg0IDIuOTg4VDE3LjkgNy40NjJxLjI3NS4wMjUuNDM1LjE5NHQuMTY1LjQ1NnEuMDMgMS4xNDYuNzM0IDIuMDA0cS43MDIuODU3IDEuNzMzIDEuMjA3cS4yMzUuMDg3LjM4NC4yNjd0LjE0OS40MTRxLS4wNjUgMS45NC0uODQgMy42NzV0LTIuMDU4IDMuMDI2dC0yLjk3OSAyLjA0M1QxMiAyMS41bTAtMXEzLjI0MiAwIDUuNzQtMi4zNHEyLjQ5Ny0yLjM0IDIuNzQtNS45MzdxLTEuMzI2LS41My0yLjA2OC0xLjV0LS44NzUtMi4zMzZxLTIuMDYtLjE4LTMuNDQ1LTEuNDc3dC0xLjUxNy0zLjQxNnEtMS45MDQtLjEyNy0zLjU2LjUzM1Q2LjEzNCA1Ljg4dC0xLjkzIDIuNzlUMy41IDEycTAgMy41MTcgMi40OTEgNi4wMDlROC40ODMgMjAuNSAxMiAyMC41TTEwLjUgOS44MDhxLjU0OCAwIC45MjgtLjM5dC4zOC0uOTE4cTAtLjU0OC0uMzgtLjkyOHQtLjkyOC0uMzhxLS41MjkgMC0uOTE4LjM4cS0uMzkuMzgtLjM5LjkyOHEwIC41MjkuMzkuOTE4dC45MTguMzltLTIgNXEuNTQ4IDAgLjkyOC0uMzl0LjM4LS45MThxMC0uNTQ4LS4zOC0uOTI4dC0uOTI4LS4zOHEtLjUyOSAwLS45MTguMzhxLS4zOS4zOC0uMzkuOTI4cTAgLjUyOS4zOS45MTh0LjkxOC4zOW02LjUgMXEuMzQ4IDAgLjU3OC0uMjR0LjIzLS41NjhxMC0uMzQ4LS4yMy0uNTc4dC0uNTc4LS4yM3EtLjMyOSAwLS41NjguMjNxLS4yNC4yMy0uMjQuNTc4cTAgLjMyOS4yNC41Njh0LjU2OC4yNCIvPjwvc3ZnPg==" alt="">
+                <p class="font-bold text-3xl text-center">Usamos cookies</p>
+                <p class="text-base font-bold text-center my-4">¡Por favor, acepta estas politicas para seguir disfrutando de nuestro sitio!</p>
+                <button id="btnAceptar" class="bg-orange-500 mb-3 font-bold text-white text-xl px-6 py-2 rounded-xl cursor-pointer">Aceptar</button>
+                <button id="btnRechazar" class="font-bold text-white cursor-pointer">Rechazar...</button>
+            </div>
+        </div>
+    </div>
     <!-- Menu -->
-    <nav class="md:sticky md:top-0 md:z-50 bg-white flex justify-between items-center rounded-2xl mx-6 md:m-10 lg:mx-15 md:px-5 md:py-5 my-2 md:my-0">
+    <nav class="web md:sticky md:top-0 md:z-50 bg-white flex justify-between items-center rounded-2xl mx-6 md:m-10 lg:mx-15 md:px-5 md:py-5 my-2 md:my-0">
         <h3 class="font-bold text-2xl">RopsMart</h3>
         <div class="md:flex items-center gap-16 hidden">
-            <a @click="inicio = 'home'" href="#Home" class="cursor-pointer">Inicio</a>
-            <a @click="inicio = 'home'" href="#Elementos" class="cursor-pointer">Elementos</a>
-            <a @click="inicio = 'home'" href="#Productos" class="cursor-pointer">Productos</a>
+            <a @click="cambiarVista('home'); scrollToId('home')" class="cursor-pointer">Inicio</a>
+            <a @click="cambiarVista('home'); scrollToId('Elementos')" class="cursor-pointer">Elementos</a>
+            <a @click="cambiarVista('home'); scrollToId('Productos')" class="cursor-pointer">Productos</a>
         </div>
         <div class="md:flex gap-4 hidden">
             <a href="public/login.html"><img class="w-8 cursor-pointer" src="/public/img/MaterialSymbolsLightSupervisedUserCircle.svg" alt=""></a>
             <div class="relative">
-                <img @click="inicio = 'favorito'" class="w-8 cursor-pointer" src="/public/img/MaterialSymbolsLightFavoriteOutline.svg" alt="">
+                <img @click="cambiarVista('favorito')" class="w-8 cursor-pointer" src="/public/img/MaterialSymbolsLightFavoriteOutline.svg" alt="">
                 <div class="absolute inset-0 left-3/4 -top-1/2"><span id="contadorFavoritos" class="bg-blue-700 rounded-2xl px-1.5 border-1 border-black text-white font-bold">0</span></div>
             </div>
             <div class="relative">
-                <img @click="inicio = 'compra'" class="w-8 cursor-pointer" src="/public/img/MaterialSymbolsLightAddShoppingCartRounded.svg" alt="">
+                <img @click="cambiarVista('compra')" class="w-8 cursor-pointer" src="/public/img/MaterialSymbolsLightAddShoppingCartRounded.svg" alt="">
                 <div class="absolute inset-0 left-3/4 -top-1/2"><span id="contadorCarrito" class="bg-amber-700 rounded-2xl px-1.5 border-1 border-black text-white font-bold">0</span></div>
             </div>
         </div>
@@ -36,9 +48,9 @@
         <details id="menu" class="md:hidden">
             <summary class="list-none"><img class="cursor-pointer w-10" src="public/img/MaterialSymbolsLightMenuRounded.svg" alt=""></summary>
             <div class="flex flex-col gap-4 fixed z-50 right-10 bg-gray-900 text-white w-1/2 p-4 rounded-2xl">
-              <a @click="inicio = 'home'" href="#Home">Home</a>
-              <a @click="inicio = 'home'" href="#Shop">Shop</a>
-              <a @click="inicio = 'home'" href="#Elements">Elements</a>
+              <a @click="cambiarVista('home'); scrollToId('Home')">Home</a>
+              <a @click="cambiarVista('home'); scrollToId('Shop')">Shop</a>
+              <a @click="cambiarVista('home'); scrollToId('Elements')">Elements</a>
               <hr>
               <div class="flex justify-between items-center">
                 <a href="public/login.html"><img class="w-10 filter invert cursor-pointer" src="public/img/MaterialSymbolsLightSupervisedUserCircle.svg" alt=""></a>
@@ -48,8 +60,13 @@
             </div>
         </details>
     </nav>
-    <section x-show="inicio === 'home'">
-        <header x-data="{anuncio: 'one'}" x-data="{inicio: 'home'}" class="w-full h-screen">
+    <!--Animation the loader-->
+    <div id="loader" class="contenedorLoader">
+        <div class="loader"></div>
+    </div>
+    <!--Contenido de la web-->
+    <section x-show="inicio === 'home'" id="contenido" class="web">
+        <header x-data="{anuncio: 'one'}" class="w-full md:h-screen">
             <section class="relative" x-data="slider()" x-init="iniciarSlider()" @mouseenter="pausarSlider()" @mouseleave="iniciarSlider()" class="relative">
             <!-- Section Anuncio 1-->
             <main x-show="anuncio === 'one'" class="grid lg:grid-cols-2 h-[70vh] md:h-[80vh] lg:h-[70vh] 2xl:h-[80vh] bg-fuchsia-300 overflow-hidden">
@@ -124,7 +141,7 @@
                 </div>
             </div>                        
         </header>
-        <section class="mx-6 md:mx-10 lg:mx-20">
+        <section class="mx-6 mt-20 md:mt-0 md:mx-10 lg:mx-20">
             <!-- Elementos -->
             <article class="grid grid-cols-2 md:grid-cols-4 md:grid-rows-2 mb-10 md:mb-16 gap-2 md:gap-4 lg:h-[40vw]">
                 <div class="relative col-span-2 md:row-span-2">
@@ -257,7 +274,7 @@
                     <p class="font-bold text-2xl">Total</p>
                     <p class="precioTotal font-bold text-2xl">$ 0.00</p>
                 </div>
-                <button @click="inicio = 'domicilio'" class="bg-emerald-600  py-2 rounded-lg border-2 cursor-pointer">Continuar Compra</button>
+                <button @click="cambiarVista('domicilio')" class="bg-emerald-600  py-2 rounded-lg border-2 cursor-pointer">Continuar Compra</button>
             </div>
         </article>
         <!--Section de Domicilio -->
@@ -271,7 +288,7 @@
 
                     </div>
                 </div>
-                <button @click="inicio = 'agregar_direccion'" class="bg-gray-300 w-full rounded-lg border-2 py-4 text-lg font-bold cursor-pointer">Agregar Direccion</button>
+                <button @click="cambiarVista('agregar_direccion')" class="bg-gray-300 w-full rounded-lg border-2 py-4 text-lg font-bold cursor-pointer">Agregar Direccion</button>
             </div>
             <!-- Resumen de la Compra -->
             <div class="flex flex-col justify-between gap-6 bg-gray-300 h-max rounded-2xl p-4">
@@ -291,7 +308,7 @@
                     <p class="font-bold text-2xl">Total</p>
                     <p class="precioTotal font-bold text-2xl">$ 0.00</p>
                 </div>
-                <button @click="inicio = 'tarjeta'" class="bg-emerald-600  py-2 rounded-lg border-2 cursor-pointer">Continuar Compra</button>
+                <button @click="cambiarVista('tarjeta')" class="bg-emerald-600  py-2 rounded-lg border-2 cursor-pointer">Continuar Compra</button>
             </div>
         </article>
         <!--Section de Tarjetas -->
@@ -305,7 +322,7 @@
 
                     </div>
                 </div>
-                <button @click="inicio = 'agregar_tarjeta'" class="bg-gray-300 w-full rounded-lg border-2 py-4 text-lg font-bold cursor-pointer">Agregar Tarjeta</button>
+                <button @click="cambiarVista('agregar_tarjeta')" class="bg-gray-300 w-full rounded-lg border-2 py-4 text-lg font-bold cursor-pointer">Agregar Tarjeta</button>
             </div>
             <!-- Resumen de la Compra -->
             <div class="flex flex-col justify-between gap-6 bg-gray-300 h-max rounded-2xl p-4">
@@ -325,7 +342,7 @@
                     <p class="font-bold text-2xl">Total</p>
                     <p class="precioTotal font-bold text-2xl">$ 0.00</p>
                 </div>
-                <button @click="inicio = 'ticket'" id="btn-generar-ticket" class="bg-emerald-600  py-2 rounded-lg border-2 cursor-pointer">Comprar</button>
+                <button @click="cambiarVista('ticket')" id="btn-generar-ticket" class="bg-emerald-600  py-2 rounded-lg border-2 cursor-pointer">Comprar</button>
             </div>
         </article>
         <!-- Nueva Direccion -->
@@ -406,7 +423,7 @@
                         </div>
                     </div>
                     <p id="alertDireccion" class="hidden text-red-900 font-bold">Rellene los campos</p>
-                    <button @click="inicio = 'domicilio'" class="bg-emerald-600 w-full py-2 rounded-lg mt-4 border-2 cursor-pointer">Añadir Direccion</button>
+                    <button @click="cambiarVista('domicilio')" class="bg-emerald-600 w-full py-2 rounded-lg mt-4 border-2 cursor-pointer">Añadir Direccion</button>
                 </form>
             </div>
         </article>
@@ -434,7 +451,7 @@
                         </div>
                     </div>
                     <p id="alertTarjeta" class="hidden text-red-900 font-bold">Rellene los campos</p>
-                    <button @click="inicio = 'tarjeta'" class="bg-emerald-600 w-full py-2 rounded-lg mt-4 border-2 cursor-pointer">Añadir Tarjeta</button>
+                    <button @click="cambiarVista('tarjeta')" class="bg-emerald-600 w-full py-2 rounded-lg mt-4 border-2 cursor-pointer">Añadir Tarjeta</button>
                 </form>
             </div>
         </article>
@@ -482,7 +499,7 @@
                 </div>
                 <h3 class="text-lg text-center font-bold my-6">!Gracias por su compra!</h3>
                 <div class="grid grid-cols-2 gap-4">
-                    <button @click="inicio = 'home'" id="compraAceptada" class="bg-emerald-600 w-full py-2 rounded-lg border-2 cursor-pointer">Aceptar</button>
+                    <button @click="cambiarVista('home')" id="compraAceptada" class="bg-emerald-600 w-full py-2 rounded-lg border-2 cursor-pointer">Aceptar</button>
                     <button id="descargarTicket" class="bg-white w-full py-2 rounded-lg border-2 cursor-pointer">Descargar</button>
                 </div>
             </div>
@@ -490,6 +507,12 @@
     </section>
 
     <script>
+        window.onload = () => {
+            document.getElementById('loader').style.display = 'none';
+            document.querySelector('#contenido').style.display = 'block';
+        };
+
+        //funcion para mostrar los anuncios del header
         function slider() {
           return {
             anuncio: 'one',
@@ -510,6 +533,43 @@
         
         const marquee = document.querySelector('.marquee');
         marquee.innerHTML += marquee.innerHTML; // duplicamos el contenido visualmente
+
+        //funcion para manejar el hast entre secciones
+        function navegacion() {
+            return {
+                inicio: 'home',
+
+                init() {
+                    window.addEventListener('hashchange', () => {
+                        this.inicio = this.getHash();
+                    });
+
+                    // Esperar un tick para que Alpine se estabilice antes de asignar la vista inicial
+                    this.$nextTick(() => {
+                        this.inicio = this.getHash();
+                    });
+                },
+
+                cambiarVista(vista) {
+                    this.inicio = vista;
+                    location.hash = vista;
+                },
+
+                getHash() {
+                    return location.hash.replace('#', '') || 'home';
+                }
+            }
+        }
+
+        //funcion para hacer scroll automatico cuando se navega con los button del nav
+        function scrollToId(id) {
+        requestAnimationFrame(() => {
+            const el = document.getElementById(id);
+            if (el) {
+            el.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+        }
 
     </script>      
 </body>
